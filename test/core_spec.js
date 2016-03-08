@@ -104,44 +104,32 @@ describe('application logic', () => {
 
     it('creates a tally for the voted entry', () => {
       const state = fromJS({
-        vote: {
-          pair: ['Trainspotting', '28 Days Later']
-        },
-        entries: []
+        pair: ['Trainspotting', '28 Days Later']
       });
       const nextState = vote(state, 'Trainspotting');
       expect(nextState).to.equal(fromJS({
-        vote: {
-          pair: ['Trainspotting', '28 Days Later'],
-          tally: {
-            'Trainspotting': 1
-          }
-        },
-        entries: []
+        pair: ['Trainspotting', '28 Days Later'],
+        tally: {
+          'Trainspotting': 1
+        }
       }));
     });
 
     it('adds to existing tally for the voted entry', () => {
       const state = fromJS({
-        vote: {
-          pair: ['Trainspotting', '28 Days Later'],
-          tally: {
-            'Trainspotting': 3,
-            '28 Days Later': 2
-          }
-        },
-        entries: List()
+        pair: ['Trainspotting', '28 Days Later'],
+        tally: {
+          'Trainspotting': 3,
+          '28 Days Later': 2
+        }
       });
       const nextState = vote(state, 'Trainspotting');
       expect(nextState).to.equal(fromJS({
-        vote: {
-          pair: ['Trainspotting', '28 Days Later'],
-          tally: {
-            'Trainspotting': 4,
-            '28 Days Later': 2
-          }
-        },
-        entries: []
+        pair: ['Trainspotting', '28 Days Later'],
+        tally: {
+          'Trainspotting': 4,
+          '28 Days Later': 2
+        }
       }));
     });
   });

@@ -53,10 +53,9 @@ function getWinners(vote) {
   }
 }
 
-export function vote(state, entry) {
-  const vote = state.get('vote');
-  return state.updateIn(
-    ['vote', 'tally', entry],
+export function vote(voteState, entry) {
+  return voteState.updateIn(
+    ['tally', entry],
     0,
     tally => tally + 1
   );
