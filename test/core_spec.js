@@ -36,7 +36,8 @@ describe('application logic', () => {
       const nextState = next(state);
       expect(nextState).to.equal(fromJS({
         vote: {
-          pair: ['Trainspotting', '28 Days Later']
+          pair: ['Trainspotting', '28 Days Later'],
+          id: 1
         },
         entries: ['Sunshine']
       }));
@@ -49,14 +50,16 @@ describe('application logic', () => {
           tally: {
             'Trainspotting': 4,
             '28 Days Later': 2
-          }
+          },
+          id: 1
         },
         entries: ['Sunshine', 'Millions', '127 Hours']
       });
       const nextState = next(state);
       expect(nextState).to.equal(fromJS({
         vote: {
-          pair: ['Sunshine', 'Millions']
+          pair: ['Sunshine', 'Millions'],
+          id: 2
         },
         entries: ['127 Hours', 'Trainspotting']
       }));
@@ -69,14 +72,16 @@ describe('application logic', () => {
           tally: {
             'Trainspotting': 2,
             '28 Days Later': 2
-          }
+          },
+          id: 1
         },
         entries: ['Sunshine', 'Millions', '127 Hours']
       });
       const nextState = next(state);
       expect(nextState).to.equal(fromJS({
         vote: {
-          pair: ['Sunshine', 'Millions']
+          pair: ['Sunshine', 'Millions'],
+          id: 2
         },
         entries: ['127 Hours', 'Trainspotting', '28 Days Later']
       }));

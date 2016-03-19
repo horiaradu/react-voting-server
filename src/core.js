@@ -16,7 +16,8 @@ export function next(state) {
   } else {
     return state.merge({
       vote: Map({
-        pair: entries.take(2)
+        pair: entries.take(2),
+        id: state.getIn(['vote', 'id'], 0) + 1
       }),
       entries: entries.skip(2)
     });
