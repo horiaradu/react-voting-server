@@ -38,13 +38,14 @@ describe('reducer', () => {
       },
       entries: []
     });
-    const action = {type: 'VOTE', entry: 'Trainspotting'};
+    const action = {type: 'VOTE', entry: 'Trainspotting', voterId: 'John'};
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.equal(fromJS({
       vote: {
         pair: ['Trainspotting', '28 Days Later'],
-        tally: {Trainspotting: 1}
+        tally: {Trainspotting: 1},
+        votes: {John: 'Trainspotting'}
       },
       entries: []
     }));
@@ -57,7 +58,7 @@ describe('reducer', () => {
       },
       entries: []
     });
-    const action = {type: 'VOTE', entry: 'Sunshine'};
+    const action = {type: 'VOTE', entry: 'Sunshine', voterId: 'John'};
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.equal(fromJS({

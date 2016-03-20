@@ -111,11 +111,14 @@ describe('application logic', () => {
       const state = fromJS({
         pair: ['Trainspotting', '28 Days Later']
       });
-      const nextState = vote(state, 'Trainspotting');
+      const nextState = vote(state, 'Trainspotting', 'John');
       expect(nextState).to.equal(fromJS({
         pair: ['Trainspotting', '28 Days Later'],
         tally: {
           'Trainspotting': 1
+        },
+        votes: {
+          John: 'Trainspotting'
         }
       }));
     });
@@ -126,14 +129,42 @@ describe('application logic', () => {
         tally: {
           'Trainspotting': 3,
           '28 Days Later': 2
-        }
+        },
+        votes: {}
       });
-      const nextState = vote(state, 'Trainspotting');
+      const nextState = vote(state, 'Trainspotting', 'John');
       expect(nextState).to.equal(fromJS({
         pair: ['Trainspotting', '28 Days Later'],
         tally: {
           'Trainspotting': 4,
           '28 Days Later': 2
+        },
+        votes: {
+          John: 'Trainspotting'
+        }
+      }));
+    });
+
+    it("overrides the voter's previous vote", () => {
+      const state = fromJS({
+        pair: ['Trainspotting', '28 Days Later'],
+        tally: {
+          'Trainspotting': 3,
+          '28 Days Later': 2
+        },
+        votes: {
+          John: 'Trainspotting'
+        }
+      });
+      const nextState = vote(state, '28 Days Later', 'John');
+      expect(nextState).to.equal(fromJS({
+        pair: ['Trainspotting', '28 Days Later'],
+        tally: {
+          'Trainspotting': 2,
+          '28 Days Later': 3
+        },
+        votes: {
+          John: '28 Days Later'
         }
       }));
     });

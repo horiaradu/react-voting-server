@@ -54,13 +54,30 @@ function getWinners(vote) {
   }
 }
 
-export function vote(voteState, entry) {
+export function vote(voteState, entry, voterId) {
+  return addVote(
+    removePreviousVote(voteState, voterId),
+    entry,
+    voterId
+  );
+}
+
+function removePreviousVote(voteState, voterId) {
+  const votedFor = voteState.getIn(['votes', voterId]);
+  if (votedFor) {
+    return voteState
+      .updateIn(['tally', votedFor], tally => tally - 1)
+      .deleteIn(['votes', voterId]);
+  } else {
+    return voteState;
+  }
+}
+
+function addVote(voteState, entry, voterId) {
   if (voteState.get('pair').includes(entry)) {
-    return voteState.updateIn(
-      ['tally', entry],
-      0,
-      tally => tally + 1
-    );
+    return voteState
+      .updateIn(['tally', entry], 0, tally => tally + 1)
+      .setIn(['votes', voterId], entry);
   } else {
     return voteState;
   }

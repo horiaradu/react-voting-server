@@ -1,5 +1,5 @@
 import {setEntries, next, vote} from './core';
-import { Map } from 'immutable';
+import {Map} from 'immutable';
 
 export const INITIAL_STATE = Map();
 
@@ -11,7 +11,7 @@ export default function reducer(state = INITIAL_STATE, action) {
       return next(state);
     case 'VOTE':
       return state.update('vote',
-        voteState => vote(voteState, action.entry))
+        voteState => vote(voteState, action.entry, action.voterId))
   }
   return state;
 }
