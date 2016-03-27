@@ -1,10 +1,13 @@
 import {List, Map} from 'immutable';
 
 export function setEntries(state, entries) {
-  return state.set('entries', List(entries));
+  const entriesList = List(entries);
+  return state
+    .set('entries', entriesList)
+    .set('initialEntries', entriesList);
 }
 
-export function next(state) {
+export function next(state, roundId = state.getIn(['vote', 'id'], 0) + 1) {
   const winners = getWinners(state.get('vote'));
   const entries = state.get('entries').concat(winners);
 
@@ -17,7 +20,7 @@ export function next(state) {
     return state.merge({
       vote: Map({
         pair: entries.take(2),
-        id: state.getIn(['vote', 'id'], 0) + 1
+        id: roundId
       }),
       entries: entries.skip(2)
     });
@@ -81,4 +84,15 @@ function addVote(voteState, entry, voterId) {
   } else {
     return voteState;
   }
+}
+
+export function restart(state) {
+  const roundId = state.getIn(['vote', 'id'], 0) + 1;
+  return next(
+    state
+      .set('entries', state.get('initialEntries'))
+      .delete('vote')
+      .delete('winner'),
+    roundId
+  );
 }
