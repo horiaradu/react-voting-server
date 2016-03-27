@@ -171,6 +171,24 @@ describe('application logic', () => {
       }));
     });
 
+    it('if no vote has been made puts both back to entries', () => {
+      const state = fromJS({
+        vote: {
+          pair: ['Trainspotting', '28 Days Later'],
+          id: 1
+        },
+        entries: ['Sunshine', 'Millions', '127 Hours']
+      });
+      const nextState = next(state);
+      expect(nextState).to.equal(fromJS({
+        vote: {
+          pair: ['Sunshine', 'Millions'],
+          id: 2
+        },
+        entries: ['127 Hours', 'Trainspotting', '28 Days Later']
+      }));
+    });
+
     it('marks winner when just one entry left', () => {
       const state = fromJS({
         vote: {

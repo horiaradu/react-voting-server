@@ -32,12 +32,16 @@ function getWinners(vote) {
     return List();
   } else {
     const tally = vote.get('tally');
-    return tally
-      .reduce(compute, Map({
-        votes: 0,
-        entries: List()
-      }))
-      .get('entries');
+    if (tally) {
+      return tally
+        .reduce(compute, Map({
+          votes: 0,
+          entries: List()
+        }))
+        .get('entries');
+    } else {
+      return vote.get('pair');
+    }
   }
 
   function compute(acc, votes, entry) {
